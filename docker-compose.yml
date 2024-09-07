@@ -1,0 +1,17 @@
+version: '3'
+services:
+  backend:
+    image: excel-app:latest
+    restart: always
+    ports:
+      - "9000:8080"
+    volumes:
+      - "D:/:/app/files"
+
+  frontend:
+    image: excel-app-portal:latest
+    restart: always
+    ports:
+      - "8081:80"
+    environment:
+      - VUE_APP_BACKEND_URL=http://backend:9000
