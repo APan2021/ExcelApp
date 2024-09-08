@@ -41,4 +41,16 @@ public class ExcelAppController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error processing file: " + e.getMessage());
         }
     }
+
+    @GetMapping("/merge")
+    public ResponseEntity<String> handleMergeData() {
+        try {
+            // 你可以在这里调用一个服务来处理文件
+            String message = excelAppService.mergeMultiRowData();
+            return ResponseEntity.ok(message);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error processing file: " + e.getMessage());
+        }
+
+    }
 }

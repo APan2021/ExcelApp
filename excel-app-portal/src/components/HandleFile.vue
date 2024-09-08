@@ -11,6 +11,11 @@
     <button @click="handleUniqueFile" :disabled="isLoading" class="upload-btn">
       输出单次会诊的病人记录
     </button>
+
+    <button @click="handleMergeData" :disabled="isLoading" class="upload-btn">
+      合并多条数据
+    </button>
+
     <div v-if="isLoading" class="loader"></div>
 
     <!-- 模态框，用于显示处理完成的消息 -->
@@ -112,7 +117,27 @@ async function handleUniqueFile() {
   }
 }
 
+// 处理合并数据的请求
+async function handleMergeData() {
+  isLoading.value = true;
+  try {
+    const response = await fetch(`${backendURL}/merge`, {
+      method: 'GET',
+    });
 
+    if (!response.ok) {
+      throw new Error('合并数据失败');
+    }
+
+    successMessage.value = '数据合并成功！';
+    showSuccessModal.value = true;
+  } catch (error) {
+    successMessage.value = '合并失败：' + error.message;
+    showSuccessModal.value = true;
+  } finally {
+    isLoading.value = false;
+  }
+}
 
 // 关闭模态框
 function closeModal() {
